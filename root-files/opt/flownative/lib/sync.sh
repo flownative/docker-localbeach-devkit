@@ -59,6 +59,7 @@ sync_start() {
     pid="$!"
 
     echo "${pid}" >"${SYNC_TMP_PATH}/sync.pid"
+    touch "${SYNC_APPLICATION_PATH}/.sync.ready"
 
     info "Sync: Running as process #${pid}"
 }
@@ -91,7 +92,7 @@ sync_stop() {
 sync_copy() {
     info "Sync: Copying files from ${SYNC_APPLICATION_ON_HOST_PATH} to ${SYNC_APPLICATION_PATH} ..."
     rsync -Ca \
-        --chown=1000:1000 \
+        --chown=1000:0 \
         --exclude .Docker/ \
         --exclude .DS_Store \
         --exclude .bundle/ \
@@ -122,5 +123,9 @@ sync_initialize() {
         exit 1
     fi
 
+    rm -f "${SYNC_APPLICATION_PATH}/.sync.ready"
     sync_copy
+
+    mkdir -p "${SYNC_APPLICATION_PATH}/Data"
+    chown  1000 "${SYNC_APPLICATION_PATH}" "${SYNC_APPLICATION_PATH}/Data"
 }
