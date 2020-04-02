@@ -1,5 +1,7 @@
-name: Build Docker Image
+name: Build Docker images
 on:
+  schedule:
+    - cron: '30 0 * * *'
   push:
     branches-ignore:
       - '**'
@@ -11,16 +13,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+          fetch-depth: 100
+
+      - name: Determine latest version
+        id: latest_version
+        uses: flownative/action-git-latest-release@master
 
       - name: Build Docker image
         id: build_image
         uses: flownative/action-docker-build@v1
         with:
-          tag_ref: ${{ github.ref }}
+          tag_ref: ${{ steps.latest_version.outputs.tag }}
+          image_name: flownative/docker-localbeach-devkit/localbeach-devkit
+          image_tag: ${{ steps.latest_version.outputs.value }}
           git_repository_url: https://github.com/${{ github.repository }}
           git_sha: ${{ github.sha }}
-          image_name: flownative/docker-localbeach-devkit/localbeach-devkit
           registry_password: ${{ secrets.GITHUB_BOT_TOKEN }}
+
+      - name: Tag semver releases
+        uses: flownative/action-docker-publish-semver@v1
+        with:
+          tag_ref: ${{ steps.build_image.outputs.image_tag }}
+          tag_latest: 'no'
+
+          source_image_name: docker.pkg.github.com/flownative/docker-localbeach-devkit/localbeach-devkit
+          source_registry_username: github
+          source_registry_password: ${{ secrets.GITHUB_BOT_TOKEN }}
+          source_registry_endpoint: https://docker.pkg.github.com/v2/
+
+          target_image_name: docker.pkg.github.com/flownative/docker-localbeach-devkit/localbeach-devkit
+          target_registry_username: github
+          target_registry_password: ${{ secrets.GITHUB_BOT_TOKEN }}
+          target_registry_endpoint: https://docker.pkg.github.com/v2/
 
       - name: Dispatch
         uses: peter-evans/repository-dispatch@v1
@@ -28,4 +54,3 @@ jobs:
           token: ${{ secrets.GITHUB_BOT_TOKEN }}
           event-type: image-built
           client-payload: '{"image_name": "${{ steps.build_image.outputs.image_name }}", "image_tag": "${{ steps.build_image.outputs.image_tag }}"}'
-
