@@ -14,9 +14,10 @@ ENV FLOWNATIVE_LIB_PATH="/opt/flownative/lib" \
     PATH="/opt/flownative/sync/bin:$PATH" \
     LOG_DEBUG=true
 
+USER root
 COPY root-files /
-
 RUN /build.sh init && /build.sh build
 
+USER 1000
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "run" ]
