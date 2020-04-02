@@ -18,6 +18,5 @@ USER root
 COPY root-files /
 RUN /build.sh init && /build.sh build
 
-USER 1000
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "run" ]
