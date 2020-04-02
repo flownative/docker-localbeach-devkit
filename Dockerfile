@@ -14,8 +14,6 @@ ENV FLOWNATIVE_LIB_PATH="/opt/flownative/lib" \
     PATH="/opt/flownative/sync/bin:$PATH" \
     LOG_DEBUG=true
 
-COPY --from=docker.pkg.github.com/flownative/bash-library/bash-library:1 /lib $FLOWNATIVE_LIB_PATH
-
 COPY root-files /
 
 RUN /build.sh init && /build.sh build
