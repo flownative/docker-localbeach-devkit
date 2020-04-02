@@ -1,6 +1,6 @@
 # Local Beach Dev Kit
 
-![Nightly Builds](https://github.com/flownative/docker-localbeach-devkit/workflows/Nightly%20Builds/badge.svg)
+![Build](https://github.com/flownative/docker-localbeach-devkit/workflows/Build%20Docker%20images/badge.svg)
 
 This Docker image is used as a sidecar-container in Local Beach
 development environments and takes care of synchronizing files from the
