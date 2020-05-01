@@ -12,7 +12,7 @@ ENV FLOWNATIVE_LIB_PATH="/opt/flownative/lib" \
     SYNC_APPLICATION_PATH="/application" \
     SYNC_APPLICATION_ON_HOST_PATH="/application-on-host" \
     PATH="/opt/flownative/sync/bin:$PATH" \
-    LOG_DEBUG=true
+    LOG_DEBUG=false
 
 USER root
 COPY root-files /
