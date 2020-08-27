@@ -22,7 +22,7 @@ sync_loop() {
     if [ -z "${SYNC_EXTRA_EXCLUDE}" ]; then
         exclude="(\.git\/|\.svn\/|\.idea\/|\.LocalBeach\/|Web\/|Data\/|___jb_)"
     else
-        exclude="(\.git\/|\.svn\/|\.idea\/|\.LocalBeach\/|Web\/|Data\/|___jb_|${EXTRA_EXCLUDE})"
+        exclude="(\.git\/|\.svn\/|\.idea\/|\.LocalBeach\/|Web\/|Data\/|___jb_|${SYNC_EXTRA_EXCLUDE})"
     fi
 
     inotifywait -m -q -r -e CREATE -e DELETE -e MODIFY -e MOVED_FROM -e MOVED_TO --exclude "${exclude}" --format '%e %w%f' /application-on-host | while read EVENT FILE; do
