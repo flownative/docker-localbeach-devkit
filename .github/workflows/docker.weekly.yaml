@@ -1,10 +1,7 @@
-name: Build Docker images
+name: Weekly Builds
 on:
-  push:
-    branches-ignore:
-      - '**'
-    tags:
-      - 'v*.*.*'
+  schedule:
+    - cron: '30 0 * * 1'
 
 jobs:
   build:
