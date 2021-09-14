@@ -94,6 +94,7 @@ sync_copy() {
     rsync -Ca \
         --chown=1000:0 \
         --exclude .Docker/ \
+        --exclude .LocalBeach/ \
         --exclude .DS_Store \
         --exclude .bundle/ \
         --exclude .git/ \
