@@ -92,6 +92,7 @@ sync_stop() {
 sync_copy() {
     info "Sync: Copying files from ${SYNC_APPLICATION_ON_HOST_PATH} to ${SYNC_APPLICATION_PATH} ..."
     rsync -Ca \
+        --delete \
         --chown=1000:0 \
         --exclude .Docker/ \
         --exclude .LocalBeach/ \
