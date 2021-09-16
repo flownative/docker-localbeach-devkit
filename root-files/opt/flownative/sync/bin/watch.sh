@@ -39,7 +39,10 @@ sync_loop() {
         'CREATE,ISDIR' | 'MOVED_TO,ISDIR' | 'MODIFY,ISDIR')
             COMMAND="[ -d "${FILE}" ] && cp -rpLf '${FILE}' '$(dirname ${FILE/\/application-on-host\//\/application\/})'"
             ;;
-        'CREATE' | 'MOVED_TO' | 'MODIFY')
+        'CREATE' | 'MOVED_TO')
+            COMMAND="[ -f "${FILE}" ] && cp -pLf '${FILE}' '${FILE/\/application-on-host\//\/application\/}' ; [ -d "${FILE}" ] && cp -rpLf '${FILE}' '$(dirname ${FILE/\/application-on-host\//\/application\/})'"
+            ;;
+        'MODIFY')
             COMMAND="[ -f "${FILE}" ] && cp -pLf '${FILE}' '${FILE/\/application-on-host\//\/application\/}'"
             ;;
         *)
