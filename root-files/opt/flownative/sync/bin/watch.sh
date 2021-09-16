@@ -19,11 +19,14 @@ sync_loop() {
 
     debug "Sync: Starting sync loop for process #$$"
 
+    exclude="\.Docker\/|\.LocalBeach\/|\.DS_Store\/|\.bundle\/|\.git\/|\.svn\/|\.idea\/|\.sass-cache\/|\/bundle\/|\/node_modules\/|\/tmp\/|\/Data\/|\/Web\/|___jb_"
     if [ -z "${SYNC_EXTRA_EXCLUDE}" ]; then
-        exclude="(\.git\/|\.svn\/|\.idea\/|\.LocalBeach\/|Web\/|Data\/|___jb_)"
+        exclude="(${exclude})"
     else
-        exclude="(\.git\/|\.svn\/|\.idea\/|\.LocalBeach\/|Web\/|Data\/|___jb_|${SYNC_EXTRA_EXCLUDE})"
+        exclude="(${exclude}|${SYNC_EXTRA_EXCLUDE})"
     fi
+
+    debug "Sync: Exlcuding ${exclude}"
 
     inotifywait -m -q -r -e CREATE -e DELETE -e MODIFY -e MOVED_FROM -e MOVED_TO --exclude "${exclude}" --format '%e %w%f' /application-on-host | while read EVENT FILE; do
         case ${EVENT} in
