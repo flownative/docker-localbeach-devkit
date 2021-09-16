@@ -99,13 +99,14 @@ sync_copy() {
         --exclude .DS_Store \
         --exclude .bundle/ \
         --exclude .git/ \
+        --exclude .svn/ \
         --exclude .idea/ \
         --exclude .sass-cache/ \
         --exclude bundle/ \
         --exclude node_modules/ \
         --exclude tmp/ \
         --exclude /Data/ \
-        --exclude /Web/_Resources/ \
+        --exclude /Web/ \
         --include core \
         "${SYNC_APPLICATION_ON_HOST_PATH}/" "${SYNC_APPLICATION_PATH}"
     info "Sync: Finished copying"
@@ -129,5 +130,5 @@ sync_initialize() {
     sync_copy
 
     mkdir -p "${SYNC_APPLICATION_PATH}/Data"
-    chown  1000 "${SYNC_APPLICATION_PATH}" "${SYNC_APPLICATION_PATH}/Data"
+    chown 1000 "${SYNC_APPLICATION_PATH}" "${SYNC_APPLICATION_PATH}/Data"
 }
