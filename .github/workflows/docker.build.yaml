@@ -4,7 +4,7 @@ on:
     branches-ignore:
       - '**'
     tags:
-      - 'v*.*.*'
+      - 'v0.*.*'
 
 jobs:
   build:
@@ -57,6 +57,8 @@ jobs:
           push: true
           tags: |
             flownative/localbeach-devkit:${{ steps.latest_version.outputs.version }}
+            flownative/localbeach-devkit:0
             flownative/localbeach-devkit:latest
             europe-docker.pkg.dev/flownative/docker/localbeach-devkit:${{ steps.latest_version.outputs.version }}
+            europe-docker.pkg.dev/flownative/docker/localbeach-devkit:0
             europe-docker.pkg.dev/flownative/docker/localbeach-devkit:latest
