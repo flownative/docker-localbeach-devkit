@@ -1,4 +1,4 @@
-FROM europe-docker.pkg.dev/flownative/docker/base:buster
+FROM europe-docker.pkg.dev/flownative/docker/base:3
 MAINTAINER Robert Lemke <robert@flownative.com>
 
 LABEL org.label-schema.name="Local Beach Dev Kit"
